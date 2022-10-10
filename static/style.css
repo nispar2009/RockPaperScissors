@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+body {
+font-family: Roboto;
+margin: 0;
+font-size: 18px;
+}
+.btn {
+padding: 15px 40px;
+cursor: pointer;
+border: none;
+font-size: 15px;
+user-select: none;
+text-decoration: none;
+color: white;
+outline: none;
+background-color: #00aaff;
+}
+.btn:hover {
+transition: 0.2s;
+background-color: #0077b3;
+}
+.section-bg {
+width: 100%;
+overflow: hidden;
+padding-top: 20px;
+padding-bottom: 20px;
+background-color: lightgrey;
+}
+.section-blank {
+width: 100%;
+overflow: hidden;
+padding-top: 20px;
+padding-bottom: 20px;
+background-color: none;
+}
+h1.heading {
+color: #0077b3;
+}
+h2.heading {
+color: #00aaff;
+}
+.footer {
+width: 100%;
+display: block;
+bottom: 0;
+text-align: center;
+color: white;
+padding-top: 20px;
+padding-bottom: 20px;
+background-color: lightgrey;
+}
+.footer .footer-link {
+color: #00aaff;
+}
+.footer .footer-link:hover {
+transition: 0.2s;
+color: #0077b3;
+}
+.nav-desktop {
+overflow: hidden;
+width: 100%;
+display: block;
+top: 0;
+background-color: #00aaff;
+}
+.nav-desktop-link {
+color: white;
+text-decoration: none;
+display: block;
+padding: 60px;
+line-height: 50px;
+text-align: center;
+font-size: 30px;
+position: relative;
+}
+.nav-desktop-link:hover {
+background-color: #0077b3;
+}
+.nav-desktop-item {
+display: inline;
+}
+.nav-desktop-brand {
+font-size: 40px;
+}
+.form {
+outline: none;
+background-color: lightgrey;
+border: none;
+}
+input.form {
+height: 50px;
+width: 300px;
+font-size: large;
+}
+.btn.btn-submit {
+padding: 15px 100px}
+textarea.form {
+width: 300px;
+font-size: large;
+height: 100px;
+resize: none;
+}
+select.form {
+height: 50px;
+width: 300px;
+font-size: large;
+}
+@media only screen and (max-width: 1024px) {
+.nav-desktop {
+display: none;
+}
+.nav-mobile {
+display: block;
+overflow: hidden;
+}
+input.form {
+width: 300px;
+}
+select.form {
+width: 300px;
+}
+textarea.form {
+width: 300px;
+}
+table.table td, table.table th {
+padding: 10px 25px;
+}
+}
+@media only screen and (min-width: 1025px) {
+.nav-mobile {
+display: none
+}
+table.table td, table.table th {
+padding: 10px 50px;
+}
+}
+.nav-mobile-brand {
+float: left;
+font-size: 40px;
+color: #00aaff;
+text-decoration: none;
+}
+.nav-mobile-right {
+float: right}
+.nav-mobile-content {
+display: none;
+position: absolute;
+min-width: 160px;
+padding-right: 50px;
+padding-top: 10px;
+padding-left: 10px;
+padding-bottom: 50px;
+/* right: 0;
+*/ background-color: #0077b3;
+}
+.nav-mobile-right .nav-mobile-content {
+right: 0;
+}
+.nav-mobile-link {
+color: white;
+text-decoration: none;
+display: block;
+}
+.nav-mobile-brand:active {
+color: dark#0077b3;
+}
+.hover-all {
+display: inline-block;
+}
+.hover-content {
+display: none;
+position: absolute;
+min-width: 160px;
+padding-right: 50px;
+padding-top: 10px;
+padding-left: 10px;
+padding-bottom: 50px;
+background-color: #00aaff;
+color: white;
+}
+.hover-all:hover .hover-content {
+display: block;
+}
+.hover-all .hover-content .hover-link:hover {
+color: lightgrey;
+transition: 0.2s;
+}
+.hover-all .hover-content .hover-link {
+color: white;
+font-display: block;
+}
+table.table {
+border-collapse: collapse;
+}
+table.table td {
+border: 4px solid #00aaff;
+text-align: center;
+color: #00aaff;
+}
+table.table th {
+border: 4px solid #0077b3;
+text-align: center;
+color: #0077b3;
+}
+.col {
+column-count: 2;
+}
+.n-m-show {
+display: block}
+input[type=radio].form {
+width: initial;
+height: initial;
+}
+input[type=checkbox].form {
+width: initial;
+height: initial;
+}
+.link {
+color: #00aaff;
+}
+.link:hover {
+color: #0077b3;
+}
+.card {
+width: 40%;
+display: inline-block;
+transition: 0.2s;
+box-shadow: 0 4px 10px 0 grey;
+}
