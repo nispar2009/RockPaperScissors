@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Flask, redirect, render_template, request
 import sqlite3
 
@@ -9,31 +8,36 @@ connection = sqlite3.connect('rockpaperscissors.db')
 cursor = connection.cursor()
 
 # Creating tables
-cursor.execute('CREATE TABLE IF NOT EXISTS users(username TEXT UNIQUE, onlineWins INT, computerWins INT)')
+cursor.execute('CREATE TABLE IF NOT EXISTS users(username TEXT, onlineWins INT, computerWins INT)')
 cursor.execute('CREATE TABLE IF NOT EXISTS challenges(id INTEGER PRIMARY KEY, user1 TEXT, user2 TEXT, input1 TEXT, input2 TEXT, winner TEXT)')
+connection.commit()
 
 @app.route('/')
 def index():
     connection = sqlite3.connect('rockpaperscissors.db')
+    cursor = connection.cursor()
 
     user = request.args.get('user')
 
     if user:
-        user_in_db = cursor.execute('SELECT * FROM users WHERE username=?', (user,))
+        # Signing in
         
-        if user_in_db:
+        if len((list(cursor.execute('SELECT * FROM users WHERE username=?', (user,))))) == 1:
+            user_in_db = list(cursor.execute('SELECT * FROM users WHERE username=?', (user,)))[0]
             return render_template('index.html', user=user_in_db)
 
-        # Signing up
+        else:
 
-        cursor.execute('INSERT INTO users VALUES (?, 0, 0)', (user,))
-        connection.commit()
+            # Signing up
 
-        new_user = cursor.execute('SELECT * FROM users WHERE username=?', (user,))
+            cursor.execute('INSERT INTO users(username, onlineWins, computerWins) VALUES(?, 0, 0)', (user,))
+            connection.commit()
 
-        connection.close()
+            new_user = list(cursor.execute('SELECT * FROM users WHERE username=?', (user,)))[0]
 
-        return render_template('index.html', user=new_user)
+            # connection.close()
+
+            return render_template('index.html', user=new_user)
 
     # Signing in
 
