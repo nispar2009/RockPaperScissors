@@ -18,8 +18,8 @@ def index():
     connection = sqlite3.connect('rockpaperscissors.db')
     cursor = connection.cursor()
 
-    if request.method == 'POST':
-        user = request.form['user']
+    if request.args.get('user'):
+        user = request.args.get('user')
         # Signing in
         
         if len((list(cursor.execute('SELECT * FROM users WHERE username=?', (user,))))) == 1:
@@ -56,7 +56,7 @@ def practice():
 
         connection.commit()
 
-    return redirect('/')
+    return redirect(f'/?user={request.args.get("user")}')
 
 if __name__ == '__main__':
     app.run(debug=True)
