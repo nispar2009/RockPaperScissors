@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-paper-scissors!</title>
+    <!-- <link rel="stylesheet" href="https://nispar2009.github.io/spectrum_stylr/Fun/Spectrum.css"> -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1 class="heading">Rock-paper-scissors</h1>
+
+    <p>Wanna play online? Check this out.</p>
+
+    <h2 class="heading">Accept challenges</h2>
+
+    <table class="table">
+        <tr>
+            <th>From</th>
+            <th>React</th>
+            <th>Winner</th>
+        </tr>
+        {% for challenge in challenges %}
+        <tr>
+            <td>{{ challenge[1] }}</td>
+            {% if challenge[5] == None %}
+            <td>
+                <button class="btn">Rock</button>
+                <button class="btn">Paper</button>
+                <button class="btn">Scissors</button>
+            </td>
+            <td>You gotta react first</td>
+            {% else %}
+            <td colspan="2">{{ challenge[5] }} won</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2 class="heading">Challenge others</h2>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Online wins</th>
+            <th>Play</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+            <td>
+                <form action="/createChallenge" method="post" style="display: inline;">
+                    <input type="hidden" name="choice" value="rock">
+                    <input type="hidden" name="user2" value="{{ user[0] }}">
+                    <input type="hidden" name="user1" value="{{ thisUser }}">
+                    <button class="btn" type="submit">Rock</button>
+                </form>
+                <form action="/createChallenge" method="post" style="display: inline;">
+                    <input type="hidden" name="choice" value="paper">
+                    <input type="hidden" name="user2" value="{{ user[0] }}">
+                    <input type="hidden" name="user1" value="{{ thisUser }}">
+                    <button class="btn" type="submit">Paper</button>
+                </form>
+                <form action="/createChallenge" method="post" style="display: inline;">
+                    <input type="hidden" name="choice" value="scissors">
+                    <input type="hidden" name="user2" value="{{ user[0] }}">
+                    <input type="hidden" name="user1" value="{{ thisUser }}">
+                    <button class="btn" type="submit">Scissors</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>

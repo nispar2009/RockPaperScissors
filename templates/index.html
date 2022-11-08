@@ -14,8 +14,7 @@
         This is a digital adaptation of an extremely popular game.
         View your dashboard here.
         <a href="/challenge?user={{ user[0] }}" class="link">Click to play with friends.</a>
-        To view open challenges, click <a href="/accept" class="link">me</a>!
-        Wanna practice first? Click <a href="/practice?user={{ user[0] }}" class="link">here</a>.
+        Wanna practice first? Click <a href="/practice?user={{ user[0] }}" class="link">me</a>.
     </p>
 
     <h2 class="heading">Your stats</h2>
@@ -23,7 +22,7 @@
     {% if user[1] >= 10 %}
     <p style="color: brown;">Online wins: {{ user[1] }} (you won bronze!)</p>
     {% elif user[1] >= 25 %}
-    <p style="color: grey;">Online wins: {{ user[1] }} (you won silver!)</p>
+    <p style="color: gray;">Online wins: {{ user[1] }} (you won silver!)</p>
     {% elif user[1] >= 50 %}
     <p style="color: goldenrod;">Online wins: {{ user[1] }} (you won gold!)</p>
     {% else %}
@@ -33,7 +32,7 @@
     {% if user[2] >= 10 %}
     <p style="color: brown;">Practice wins: {{ user[2] }} (you won bronze!)</p>
     {% elif user[2] >= 25 %}
-    <p style="color: grey;">Practice wins: {{ user[2] }} (you won silver!)</p>
+    <p style="color: gray;">Practice wins: {{ user[2] }} (you won silver!)</p>
     {% elif user[2] >= 50 %}
     <p style="color: goldenrod;">Practice wins: {{ user[2] }} (you won gold!)</p>
     {% else %}

@@ -58,5 +58,31 @@ def practice():
 
     return redirect(f'/?user={request.args.get("user")}')
 
+@app.route('/challenge')
+def challenge():
+    connection = sqlite3.connect('rockpaperscissors.db')
+    cursor = connection.cursor()
+
+    user = request.args.get('user')
+    all_users = list(cursor.execute('SELECT * FROM users WHERE username!=?', (user,)))
+    challenges = list(cursor.execute('SELECT * FROM challenges WHERE user2=?', (user,)))
+
+    return render_template('challenge.html', users=all_users, challenges=challenges, thisUser=user)
+
+@app.route('/createChallenge', methods=['POST'])
+def createChallenge():
+    choice = request.form['choice']
+    user1 = request.form['user1']
+    user2 = request.form['user2']
+
+    connection = sqlite3.connect('rockpaperscissors.db')
+    cursor = connection.cursor()
+
+    cursor.execute('INSERT INTO challenges(id, user1, user2, input1, input2, winner) VALUES(null, ?, ?, ?, null, null)', (user1, user2, choice))
+
+    connection.commit()
+
+    return redirect(f'/challenge?user={user1}')
+
 if __name__ == '__main__':
     app.run(debug=True)
