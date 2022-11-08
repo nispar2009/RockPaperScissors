@@ -21,20 +21,36 @@
         <tr>
             <th>From</th>
             <th>React</th>
-            <th>Winner</th>
+            <th>Opponent's choice</th>
         </tr>
         {% for challenge in challenges %}
         <tr>
             <td>{{ challenge[1] }}</td>
-            {% if challenge[5] == None %}
+            {% if challenge[4] == None %}
             <td>
-                <button class="btn">Rock</button>
-                <button class="btn">Paper</button>
-                <button class="btn">Scissors</button>
+                <form action="/react" method="post" style="display: inline;">
+                    <input type="hidden" name="choice" value="rock">
+                    <input type="hidden" name="challenge" value="{{ challenge[0] }}">
+                    <input type="hidden" name="user" value="{{ this_user }}">
+                    <button class="btn" type="submit">Rock</button>
+                </form>
+                <form action="/react" method="post" style="display: inline;">
+                    <input type="hidden" name="choice" value="paper">
+                    <input type="hidden" name="challenge" value="{{ challenge[0] }}">
+                    <input type="hidden" name="user" value="{{ this_user }}">
+                    <button class="btn" type="submit">Paper</button>
+                </form>
+                <form action="/react" method="post" style="display: inline;">
+                    <input type="hidden" name="choice" value="scissors">
+                    <input type="hidden" name="challenge" value="{{ challenge[0] }}">
+                    <input type="hidden" name="user" value="{{ this_user }}">
+                    <button class="btn" type="submit">Scissors</button>
+                </form>
             </td>
             <td>You gotta react first</td>
             {% else %}
-            <td colspan="2">{{ challenge[5] }} won</td>
+            <td>{{ challenge[4] }}</td>
+            <td>{{ challenge[3] }}</td>
             {% endif %}
         </tr>
         {% endfor %}
@@ -55,19 +71,19 @@
                 <form action="/createChallenge" method="post" style="display: inline;">
                     <input type="hidden" name="choice" value="rock">
                     <input type="hidden" name="user2" value="{{ user[0] }}">
-                    <input type="hidden" name="user1" value="{{ thisUser }}">
+                    <input type="hidden" name="user1" value="{{ this_user }}">
                     <button class="btn" type="submit">Rock</button>
                 </form>
                 <form action="/createChallenge" method="post" style="display: inline;">
                     <input type="hidden" name="choice" value="paper">
                     <input type="hidden" name="user2" value="{{ user[0] }}">
-                    <input type="hidden" name="user1" value="{{ thisUser }}">
+                    <input type="hidden" name="user1" value="{{ this_user }}">
                     <button class="btn" type="submit">Paper</button>
                 </form>
                 <form action="/createChallenge" method="post" style="display: inline;">
                     <input type="hidden" name="choice" value="scissors">
                     <input type="hidden" name="user2" value="{{ user[0] }}">
-                    <input type="hidden" name="user1" value="{{ thisUser }}">
+                    <input type="hidden" name="user1" value="{{ this_user }}">
                     <button class="btn" type="submit">Scissors</button>
                 </form>
             </td>

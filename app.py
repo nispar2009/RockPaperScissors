@@ -10,7 +10,7 @@ cursor = connection.cursor()
 
 # Creating tables
 cursor.execute('CREATE TABLE IF NOT EXISTS users(username TEXT, onlineWins INT, computerWins INT)')
-cursor.execute('CREATE TABLE IF NOT EXISTS challenges(id INTEGER PRIMARY KEY, user1 TEXT, user2 TEXT, input1 TEXT, input2 TEXT, winner TEXT)')
+cursor.execute('CREATE TABLE IF NOT EXISTS challenges(id INTEGER PRIMARY KEY, user1 TEXT, user2 TEXT, input1 TEXT, input2 TEXT)')
 connection.commit()
 
 @app.route('/', methods=['GET', 'POST'])
@@ -67,7 +67,7 @@ def challenge():
     all_users = list(cursor.execute('SELECT * FROM users WHERE username!=?', (user,)))
     challenges = list(cursor.execute('SELECT * FROM challenges WHERE user2=?', (user,)))
 
-    return render_template('challenge.html', users=all_users, challenges=challenges, thisUser=user)
+    return render_template('challenge.html', users=all_users, challenges=challenges, this_user=user)
 
 @app.route('/createChallenge', methods=['POST'])
 def createChallenge():
@@ -78,11 +78,46 @@ def createChallenge():
     connection = sqlite3.connect('rockpaperscissors.db')
     cursor = connection.cursor()
 
-    cursor.execute('INSERT INTO challenges(id, user1, user2, input1, input2, winner) VALUES(null, ?, ?, ?, null, null)', (user1, user2, choice))
+    cursor.execute('INSERT INTO challenges(user1, user2, input1) VALUES (?, ?, ?)', (user1, user2, choice))
 
     connection.commit()
+    connection.close()
 
     return redirect(f'/challenge?user={user1}')
 
+@app.route('/react', methods=['POST'])
+def react():
+    choice2 = request.form['choice']
+    current_challenge = request.form['challenge']
+    user2 = request.form['user']
+
+    connection = sqlite3.connect('rockpaperscissors.db')
+    cursor = connection.cursor()
+
+    cursor.execute('UPDATE challenges SET input2=? WHERE id=?', (choice2, current_challenge))
+
+    choice1 = (list(cursor.execute('SELECT input1 FROM challenges WHERE id=?', (current_challenge))))[0][0]
+    user1 = (list(cursor.execute('SELECT user1 FROM challenges WHERE id=?', (current_challenge))))[0]
+
+    if choice2 == 'rock':
+        if choice1 == 'scissors':
+            cursor.execute('UPDATE users SET onlineWins=onlineWins+1 WHERE username=?', (user2,))
+        if choice1 == 'paper':
+            cursor.execute('UPDATE users SET onlineWins=onlineWins+1 WHERE username=?', user1)
+    if choice2 == 'paper':
+        if choice1 == 'rock':
+            cursor.execute('UPDATE users SET onlineWins=onlineWins+1 WHERE username=?', (user2,))
+        if choice1 == 'scissors':
+            cursor.execute('UPDATE users SET onlineWins=onlineWins+1 WHERE username=?', user1)
+    if choice2 == 'scissors':
+        if choice1 == 'paper':
+            cursor.execute('UPDATE users SET onlineWins=onlineWins+1 WHERE username=?', (user2,))
+        if choice1 == 'rock':
+            cursor.execute('UPDATE users SET onlineWins=onlineWins+1 WHERE username=?', user1)
+
+    connection.commit()
+
+    return redirect(f'/challenge?user={user2}')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
